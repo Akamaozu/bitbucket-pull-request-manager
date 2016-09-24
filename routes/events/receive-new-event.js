@@ -11,14 +11,17 @@ receive_new_event_route.post('/', function( req, res ){
 
         var pullrequest = req.body.pullrequest;
 
-        req.noticeboard.notify( 'pull-request-event', 'handle-pull-request', {
+        req.noticeboard.notify( 'pull-request-event', 
 
-          id: pullrequest.id,
-          state: pullrequest.state,
-          source: pullrequest.source,
-          destination: pullrequest.destination,
-          author: pullrequest.author
-        });
+          {
+            id: pullrequest.id,
+            state: pullrequest.state,
+            source: pullrequest.source,
+            destination: pullrequest.destination,
+            author: pullrequest.author
+          }, 
+
+        'http post ' + req.baseUrl + '/' );
       }
 
     // unknown
