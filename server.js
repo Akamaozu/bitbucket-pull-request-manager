@@ -13,4 +13,4 @@ server.get('/', function( req, res ){
   res.send('working');
 });
 
-server.listen( 5000 );
+server.listen( process.env.PORT );
