@@ -8,6 +8,8 @@ module.exports = function( noticeboard ){
 
       case 'OPEN':
 
+        noticeboard.notify( 'pull-request-created', pullrequest, 'parse-pull-request-event' );
+
         noticeboard.log( 
           '- pull request created by ' + pullrequest.author.display_name + ' -\n',
           'id: ' + pullrequest.id + '\n',
