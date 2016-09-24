@@ -8,6 +8,6 @@ module.exports = function( noticeboard ){
 
     var pullrequest = msg.notice;
 
-    rabbitmq.publish( 'pull-request', pullrequest );
+    rabbitmq.publish( 'pull-requests', pullrequest );
   });
 }
