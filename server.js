@@ -8,9 +8,7 @@ var server = require('express')(),
   server.locals.app_root_dir = __dirname;
   server.locals.noticeboard = new Noticeboard({ logOps: false });
 
-server.get('/', function( req, res ){
-
-  res.send('working');
-});
+// load server routes
+  server.use('/', require('./routes') );
 
 server.listen( process.env.PORT );
