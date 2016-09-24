@@ -11,8 +11,10 @@ module.exports = function( noticeboard ){
         noticeboard.log( 
           '- pull request created by ' + pullrequest.author.display_name + ' -\n',
           'id: ' + pullrequest.id + '\n',
-          'src: ' + pullrequest.source + '\n',
-          'dest: ' + pullrequest.destination + '\n'
+          'src:\n',
+          pullrequest.source + '\n',
+          'dest:\n',
+          pullrequest.destination
         );
 
       break;
