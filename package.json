@@ -1,0 +1,15 @@
+{
+  "name": "bitbucket-pull-request-manager",
+  "version": "0.0.1",
+  "description": "Git Pushes Bitbucket Pull Requests to Available Test Machines",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cjs-noticeboard": "0.0.7",
+    "express": "^4.14.0"
+  }
+}
