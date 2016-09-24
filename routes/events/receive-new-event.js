@@ -11,16 +11,14 @@ receive_new_event_route.post('/', function( req, res ){
 
         var pullrequest = req.body.pullrequest;
 
-        req.noticeboard.log( 
-          'NEW PULL REQUEST\n',
-          'author:\n',
-          pullrequest.author,
-          'state: ' + pullrequest.state.toLowerCase() + '\n',
-          'src:\n',
-          pullrequest.source,
-          'dest:\n',
-          pullrequest.destination
-        );
+        req.noticeboard.notify( 'pull-request-event', 'handle-pull-request', {
+
+          id: pullrequest.id,
+          state: pullrequest.state,
+          source: pullrequest.source,
+          destination: pullrequest.destination,
+          author: pullrequest.author
+        });
       }
 
     // unknown
