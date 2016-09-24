@@ -19,12 +19,12 @@ receive_new_event_route.post('/', function( req, res ){
           'src:\n',
           pullrequest.source,
           'dest:\n',
-          pullrequest.destination,
+          pullrequest.destination
         );
       }
 
     // unknown
-      else{
+      else {
 
         req.noticeboard.log( 'NEW EVENT\n', req.body );
       }  
