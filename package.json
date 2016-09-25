@@ -17,7 +17,6 @@
     "extend": "^3.0.0",
     "jackrabbit": "^4.3.0",
     "mysql": "^2.11.1",
-    "prompt": "^1.0.0",
     "shelljs": "^0.7.4",
     "ssh-connect-prompt": "0.0.2"
   }
