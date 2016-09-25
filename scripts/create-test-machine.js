@@ -9,6 +9,11 @@ var shell = require('shelljs'),
 if( !has_ssh ) throw new Error( 'this script requires ssh module to work' );
 if( !has_git ) throw new Error( 'this script requires git module to work' );
 
+// required vars
+  var homedir = require('os').homedir();
+
+console.log( homedir );
+
 // get test machine info
 var prompt = require('prompt'),
     machine = {
@@ -48,13 +53,13 @@ prompt.get({ properties: machine }, function( error, machine_props ){
 
   if( error ) throw error;
 
-  shell.mkdir( '-p' , '~/.ssh');
+  shell.mkdir( '-p' , homedir + '/.ssh');
 
-  console.log( require('fs').readdirSync('~') );
-  console.log( require('fs').readdirSync('~/.ssh') );
+  console.log( require('fs').readdirSync(homedir + '') );
+  console.log( require('fs').readdirSync(homedir + '/.ssh') );
 
-  require('fs').writeFileSync( '~/.ssh/test_machine_rsa.pub', machine_props.ssh_public_key );
-  require('fs').writeFileSync( '~/.ssh/test_machine_rsa', machine_props.ssh_private_key );
+  require('fs').writeFileSync( homedir + '/.ssh/test_machine_rsa.pub', machine_props.ssh_public_key );
+  require('fs').writeFileSync( homedir + '/.ssh/test_machine_rsa', machine_props.ssh_private_key );
 
   var bitbucket_ssh = require('ssh-connect-prompt')( process.env.BITBUCKET_REPO );
 
