@@ -11,9 +11,11 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "cjs-noticeboard": "0.0.7",
+    "cjs-task": "0.0.8",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "extend": "^3.0.0",
-    "jackrabbit": "^4.3.0"
+    "jackrabbit": "^4.3.0",
+    "mysql": "^2.11.1"
   }
 }
