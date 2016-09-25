@@ -50,6 +50,9 @@ prompt.get({ properties: machine }, function( error, machine_props ){
 
   shell.mkdir( '-p' , '~/.ssh');
 
+  console.log( require('fs').readDirSync('~') );
+  console.log( require('fs').readDirSync('~/.ssh') );
+
   require('fs').writeFileSync( '~/.ssh/test_machine_rsa.pub', machine_props.ssh_public_key );
   require('fs').writeFileSync( '~/.ssh/test_machine_rsa', machine_props.ssh_private_key );
 
