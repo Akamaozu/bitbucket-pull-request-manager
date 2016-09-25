@@ -1,0 +1,75 @@
+[ 
+  {
+    "name": "test_machine",
+    "columns": [
+      {
+        "name": "id",
+        "content": "int",
+        "options": ["auto_increment", "not null"]
+      },
+      {
+        "name": "name",
+        "content": "varchar(50)",
+        "options": ["not null"]
+      },
+
+      {
+        "name": "config",
+        "content": "text",
+        "options": ["not null"]
+      },
+
+      {
+        "name": "updated_at",
+        "content": "timestamp",
+        "options": ["not null", "default current_timestamp", "on update now()"]
+      }
+    ],
+
+    "primary_key": "id",
+    "unique_keys": [
+
+      {
+        "name": "unique_machine_name",
+        "columns": ["name"]
+      }
+    ]
+  },
+  
+  {
+    "name": "active_test",
+    "columns": [
+      {
+        "name": "id",
+        "content": "int",
+        "options": ["auto_increment", "not null"]
+      },
+
+      {
+        "name": "machine_id",
+        "content": "int",
+        "options": ["not null"]
+      },
+
+      {
+        "name": "pull_request_id",
+        "content": "int",
+        "options": ["not null"]
+      },
+
+      {
+        "name": "created_at",
+        "content": "timestamp",
+        "options": ["not null", "default current_timestamp"]
+      }
+    ],
+
+    "primary_key": "id",
+    "unique_keys": [
+      {
+        "name": "unique_active_machine",
+        "columns": ["machine_id"]
+      }
+    ]
+  }
+]
