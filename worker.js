@@ -1,3 +1,6 @@
+// load .env
+  require('dotenv').config();
+
 setup( function( error, start_worker, log ){
   
   if( error ){
