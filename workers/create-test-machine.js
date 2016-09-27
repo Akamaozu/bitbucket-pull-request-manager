@@ -18,14 +18,14 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
         shell = require('shelljs');
 
     // make app ssh dir
-    shell.mkdir( '-P', process.env.HOME + '/.ssh' );
+    shell.mkdir( '-p', process.env.HOME + '/.ssh' );
 
     // save ssh private key 
     fs.writeFileSync( process.env.HOME + '/.ssh/test_machine_rsa', machine.ssh_priv_key );
     shell.chmod( 400, process.env.HOME + '/.ssh/test_machine_rsa' );
 
     // create fake repo dir
-    shell.mkdir( '-P', process.env.HOME + '/test-repo' );
+    shell.mkdir( '-p', process.env.HOME + '/test-repo' );
 
     // create fake repo and add remotes
     shell.exec( 'git init && git remote add test-machine ' + machine.git + ' && git remote add bitbucket ' + process.env.BITBUCKET_REPO, { cwd: process.env.HOME + '/test-repo' });
