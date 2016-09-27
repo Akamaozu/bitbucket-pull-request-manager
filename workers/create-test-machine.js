@@ -17,12 +17,12 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
         fs = require('fs'),
         shell = require('shelljs');
 
-    fs.writeFileSync( '/app/test_machine_rsa', machine.ssh_priv_key );
-    shell.chmod( 400, '/app/test_machine_rsa' );
+    // fs.writeFileSync( '/app/test_machine_rsa', machine.ssh_priv_key );
+    // shell.chmod( 400, '/app/test_machine_rsa' );
 
 
-    console.log( fs.readdirSync( '/etc/ssh' ) );
-    console.log( fs.readFileSync( '/etc/ssh/ssh_config' ).toString() );
+    console.log( fs.readdirSync( process.env.HOME ) );
+    // console.log( fs.readFileSync( '/etc/ssh/ssh_config' ).toString() );
 
     nack();
     process.exit();
