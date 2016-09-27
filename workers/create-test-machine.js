@@ -17,8 +17,8 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
         fs = require('fs'),
         shell = require('shelljs');
 
-    fs.writeFileSync( '/etc/ssh/test_machine_rsa', machine.ssh_priv_key );
-    shell.chmod( 400, '/etc/ssh/test_machine_rsa' );
+    fs.writeFileSync( '/app/test_machine_rsa', machine.ssh_priv_key );
+    shell.chmod( 400, '/app/test_machine_rsa' );
 
 
     console.log( fs.readdirSync( '/etc/ssh' ) );
