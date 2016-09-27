@@ -1,8 +1,6 @@
-var rabbitmq = require('../../utils/rabbitmq-helper')( process.env.RABBITMQ_URL );
-
-rabbitmq.create( 'pull-requests' );
-
-module.exports = function( noticeboard ){
+module.exports = function( noticeboard, rabbitmq ){
+  
+  rabbitmq.create( 'pull-requests' );
   
   noticeboard.watch( 'pull-request-created', 'queue-for-next-test-machine', function( msg ){
 
