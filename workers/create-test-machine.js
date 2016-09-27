@@ -29,6 +29,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
     // create fake repo and add remotes
     shell.exec( 'git init && git remote add test-machine ' + machine.git + ' && git remote add bitbucket ' + process.env.BITBUCKET_REPO, { cwd: process.env.HOME + '/test-repo' });
+    shell.exec( 'git --version', { cwd: process.env.HOME + '/test-repo' });
 
     // see if remotes were added
     shell.exec( 'git remote -v', { cwd: process.env.HOME + '/test-repo' });
