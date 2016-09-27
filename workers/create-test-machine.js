@@ -20,6 +20,8 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
     // make app ssh dir
     shell.mkdir( '-p', process.env.HOME + '/.ssh' );
 
+    console.log( machine.ssh_priv_key );
+
     // save ssh private key 
     fs.writeFileSync( process.env.HOME + '/.ssh/test_machine_rsa', machine.ssh_priv_key );
     shell.chmod( 400, process.env.HOME + '/.ssh/test_machine_rsa' );
