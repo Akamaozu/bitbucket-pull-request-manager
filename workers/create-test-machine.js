@@ -17,12 +17,18 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
         fs = require('fs'),
         shell = require('shelljs');
 
-    // fs.writeFileSync( '/app/test_machine_rsa', machine.ssh_priv_key );
-    // shell.chmod( 400, '/app/test_machine_rsa' );
+    // save ssh private key 
+    fs.writeFileSync( process.env.HOME + '/.ssh/test_machine_rsa', machine.ssh_priv_key );
+    shell.chmod( 400, process.env.HOME + '/.ssh/test_machine_rsa' );
 
+    // create fake repo dir
+    shell.mkdir( '-P', process.env.HOME + '/test-repo' );
 
-    console.log( fs.readdirSync( process.env.HOME ) );
-    // console.log( fs.readFileSync( '/etc/ssh/ssh_config' ).toString() );
+    // create fake repo and add remotes
+    shell.exec( 'git init && git remote add test-machine ' + machine.git + ' && git remote add bitbucket ' + process.env.BITBUCKET_REPO, { cwd: process.env.HOME + '/test-repo' });
+
+    // see if remotes were added
+    shell.exec( 'git remote -v', { cwd: process.env.HOME + '/test-repo' });
 
     nack();
     process.exit();
