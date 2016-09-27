@@ -33,6 +33,9 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
     // see if remotes were added
     shell.exec( 'git remote -v', { cwd: process.env.HOME + '/test-repo' });
 
+    // test ssh connection to remotes
+    shell.exec( 'git ls-remote bitbucket', { cwd: process.env.HOME + '/test-repo' });
+
     nack();
     process.exit();
   });
