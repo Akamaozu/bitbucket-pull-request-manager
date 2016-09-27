@@ -22,8 +22,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
 
     console.log( fs.readdirSync( '/etc/ssh' ) );
-    console.log( fs.readFileSync( '/etc/ssh/ssh_config' ) );
-    console.log( fs.readFileSync( '/etc/ssh/known_hosts' ) );
+    console.log( fs.readFileSync( '/etc/ssh/ssh_config' ).toString() );
 
     nack();
     process.exit();
