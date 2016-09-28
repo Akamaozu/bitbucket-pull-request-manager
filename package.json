@@ -18,7 +18,6 @@
     "jackrabbit": "^4.3.0",
     "jsonwebtoken": "^7.1.9",
     "mysql": "^2.11.1",
-    "shelljs": "^0.7.4",
-    "ssh-connect-prompt": "0.0.2"
+    "shelljs": "^0.7.4"
   }
 }
