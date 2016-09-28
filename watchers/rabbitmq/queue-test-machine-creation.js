@@ -10,5 +10,7 @@ module.exports = function( noticeboard, rabbitmq ){
         create_machine_token = jwt.sign( machine );
 
     rabbitmq.publish( 'create-test-machine', create_machine_token );
+
+    noticeboard.notify( 'test-machine-creation-request-queued', machine.name, 'rabbitmq' );
   });
 }
