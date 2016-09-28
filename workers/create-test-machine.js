@@ -73,7 +73,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
         mysql.query( 
           'INSERT INTO test_machine ( name, config ) ' +
-          'VALUES ( ' + mysql.escape( machine_name ) + ', ' + machine_credentials_token + ' )',
+          'VALUES ( ' + mysql.escape( machine_name ) + ', "' + machine_credentials_token + '" )',
 
           function( error, result ){
 
