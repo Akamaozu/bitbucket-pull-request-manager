@@ -58,7 +58,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
           return process.exit();
         }
 
-        console.log( fs.readFileSync( process.env.HOME + '/.ssh/known_hosts' ) );
+        console.log( fs.readFileSync( process.env.HOME + '/.ssh/known_hosts' ).toString() );
         nack();
         process.exit();
       });
