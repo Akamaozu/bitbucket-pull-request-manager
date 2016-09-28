@@ -69,7 +69,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
         var machine_credentials_token = credentials_jwt.sign( machine );
 
-        var mysql = require('../utils/mysql-helper')( process.env.MYSQL_URL );
+        var mysql = require('../utils/mysql-helper')( process.env.MYSQL_URL, require( '../config/test-machines-mysql-schema.json' ) );
 
         mysql.query( 
           'INSERT INTO test_machine ( name, config ) ' +
