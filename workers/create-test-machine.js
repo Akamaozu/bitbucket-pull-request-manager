@@ -14,7 +14,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
       console.log( '[ERROR] validation failed', error );
 
       ack();
-      return process.exit();
+      return setTimeout( process.exit, 100 );
     }
 
     console.log( 'request is valid' );
@@ -49,7 +49,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
         console.log( '[ERROR] machine creation failed: could not connect to bitbucket repository', error );
         ack();
-        return process.exit();
+        return setTimeout( process.exit, 100 );
       }
 
       console.log( 'testing access to test machine' );
@@ -59,7 +59,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
           console.log( '[ERROR] machine creation failed: could not connect to test machine repository', error );
           ack();
-          return process.exit();
+          return setTimeout( process.exit, 100 );
         }
 
         console.log( 'valid machine config. saving machine' );
@@ -83,12 +83,12 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
               console.log( '[ERROR] could not save machine config', error );
               nack();
-              return process.exit();
+              return setTimeout( process.exit, 100 );
             }
 
             console.log( 'TEST MACHINE "' + machine_name + '" SUCCESSFULLY CREATED' );
             ack();
-            process.exit();
+            return setTimeout( process.exit, 100 );
           }
         );
       });
