@@ -87,10 +87,8 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
             console.log( result );
             ack();
             process.exit();
-          }); 
-
-        nack();
-        process.exit();
+          }
+        );
       });
     });
   });
