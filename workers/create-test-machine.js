@@ -1,11 +1,11 @@
 var rabbitmq = require('../utils/rabbitmq-helper')( process.env.RABBITMQ_URL ),
-    jwt = require('../utils/jwt-helper')( process.env.TEST_MACHINE_CREATION_SECRET );
+    creation_jwt = require('../utils/jwt-helper')( process.env.TEST_MACHINE_CREATION_SECRET );
 
 rabbitmq.create( 'create-test-machine' );
 
 rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
   
-  jwt.verify( token, function( error, content ){
+  creation_jwt.verify( token, function( error, content ){
 
     if( error ){
 
@@ -44,7 +44,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
       if( error ){
 
         console.log( '[ERROR] machine creation failed: could not connect to bitbucket repository', error );
-        nack();
+        ack();
         return process.exit();
       }
 
@@ -54,11 +54,41 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
         if( error ){
 
           console.log( '[ERROR] machine creation failed: could not connect to test machine repository', error );
-          nack();
+          ack();
           return process.exit();
         }
 
-        console.log( fs.readFileSync( process.env.HOME + '/.ssh/known_hosts' ).toString() );
+        console.log( 'valid machine config. saving machine' );
+
+        var machine_name = machine.name;
+        delete machine.name;
+
+        machine.known_hosts = fs.readFileSync( process.env.HOME + '/.ssh/known_hosts' ).toString();
+
+        credentials_jwt = require('../utils/jwt-helper')( process.env.TEST_MACHINE_CONFIG_SECRET );
+
+        var machine_credentials_token = credentials_jwt.sign( machine );
+
+        var mysql = require('../utils/mysql-helper')( process.env.MYSQL_URL );
+
+        mysql.query( 
+          'INSERT INTO test_machine ( name, config ) ' +
+          'VALUES ( ' + mysql.escape( machine_name ) + ', ' + machine_credentials_token + ' )',
+
+          function( error, result ){
+
+            if( error ){
+
+              console.log( '[ERROR] could not save machine config', error );
+              nack();
+              return process.exit();
+            }
+
+            console.log( result );
+            ack();
+            process.exit();
+          }); 
+
         nack();
         process.exit();
       });
