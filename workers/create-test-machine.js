@@ -2,16 +2,22 @@ var rabbitmq = require('../utils/rabbitmq-helper')( process.env.RABBITMQ_URL ),
     creation_jwt = require('../utils/jwt-helper')( process.env.TEST_MACHINE_CREATION_SECRET );
 
 rabbitmq.create( 'create-test-machine' );
-
 rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
   
+  console.log( 'test machine creation request received' );
+
+  console.log( 'verifying request validity' );
   creation_jwt.verify( token, function( error, content ){
 
     if( error ){
 
-      nack();
+      console.log( '[ERROR] validation failed', error );
+
+      ack();
       return process.exit();
     }
+
+    console.log( 'request is valid' );
 
     var machine = content,
         fs = require('fs'),
@@ -28,8 +34,6 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
     shell.chmod( 400, process.env.HOME + '/.ssh/test_machine_rsa' );
 
     // add private key to ssh config
-    // - specify identity file
-    // - disable strict host key checking
     console.log( 'creating ssh config file' );
     fs.writeFileSync( process.env.HOME + '/.ssh/config', "Host *" + EOL + "IdentityFile ~/.ssh/test_machine_rsa" + EOL + 'StrictHostKeyChecking no' );
 
@@ -65,11 +69,9 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
 
         machine.known_hosts = fs.readFileSync( process.env.HOME + '/.ssh/known_hosts' ).toString();
 
-        credentials_jwt = require('../utils/jwt-helper')( process.env.TEST_MACHINE_CONFIG_SECRET );
-
-        var machine_credentials_token = credentials_jwt.sign( machine );
-
-        var mysql = require('../utils/mysql-helper')( process.env.MYSQL_URL, require( '../config/test-machines-mysql-schema.json' ) );
+        var mysql = require('../utils/mysql-helper')( process.env.MYSQL_URL, require( '../config/test-machines-mysql-schema.json' ) ),
+            credentials_jwt = require('../utils/jwt-helper')( process.env.TEST_MACHINE_CONFIG_SECRET ),
+            machine_credentials_token = credentials_jwt.sign( machine );
 
         mysql.query( 
           'INSERT INTO test_machine ( name, config ) ' +
@@ -84,7 +86,7 @@ rabbitmq.handle( 'create-test-machine', function( token, ack, nack ){
               return process.exit();
             }
 
-            console.log( result );
+            console.log( 'TEST MACHINE "' + machine_name + '" SUCCESSFULLY CREATED' );
             ack();
             process.exit();
           }
